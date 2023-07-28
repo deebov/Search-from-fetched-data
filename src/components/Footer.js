@@ -24,6 +24,7 @@ function Footer(props) {
           </li>
         ))}
       </ul>
+      {/* /////////////////// */}
       <button
         onClick={props.onNextPage}
         className={`${classes.btn} ${classes["btn-next"]}`}
