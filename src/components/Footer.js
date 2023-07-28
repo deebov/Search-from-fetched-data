@@ -12,19 +12,17 @@ function Footer(props) {
       <ul className={classes.pagination}>
         {props.numbers.map((n, i) => (
           <li className={`${classes["page-item"]}`} key={i}>
-            <a
-              href="#"
+            <button
               onClick={() => props.onChangeCurPage(n)}
-              className={`${classes["page-link"]} ${
+              className={`${classes["page-num"]} ${
                 classes[props.currentPage === n ? "active" : ""]
               }`}
             >
               {n}
-            </a>
+            </button>
           </li>
         ))}
       </ul>
-      {/* /////////////////// */}
       <button
         onClick={props.onNextPage}
         className={`${classes.btn} ${classes["btn-next"]}`}

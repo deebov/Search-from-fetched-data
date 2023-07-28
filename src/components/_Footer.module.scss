@@ -29,12 +29,6 @@
 }
 
 .pagination {
-  font-style: italic;
-  font-size: 1.8rem;
-  font-weight: 700;
-  line-height: 2.5rem;
-  cursor: pointer;
-
   & > *:not(:first-child) {
     margin-left: 1rem;
   }
@@ -42,8 +36,14 @@
   & * {
     transition: all 0.5s;
     display: inline-block;
-    text-decoration: none;
     color: $color-grey-400;
+    border: none;
+    background-color: transparent;
+    font-style: italic;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 2.5rem;
+    cursor: pointer;
   }
 
   & *:hover {

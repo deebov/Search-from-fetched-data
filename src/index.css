@@ -59,24 +59,27 @@ body {
   .btn:active {
     transform: translateY(2px); }
 
-.pagination {
+.pagination > *:not(:first-child) {
+  margin-left: 1rem; }
+
+.pagination * {
+  transition: all 0.5s;
+  display: inline-block;
+  color: #5a5c66;
+  border: none;
+  background-color: transparent;
   font-style: italic;
   font-size: 1.8rem;
   font-weight: 700;
   line-height: 2.5rem;
   cursor: pointer; }
-  .pagination > *:not(:first-child) {
-    margin-left: 1rem; }
-  .pagination * {
-    transition: all 0.5s;
-    display: inline-block;
-    text-decoration: none;
-    color: #5a5c66; }
-  .pagination *:hover {
-    color: #5a5c66;
-    transform: translateY(-2px); }
-  .pagination *:active {
-    transform: translateY(2px); }
+
+.pagination *:hover {
+  color: #5a5c66;
+  transform: translateY(-2px); }
+
+.pagination *:active {
+  transform: translateY(2px); }
 
 .active {
   color: #7ebc3c; }
@@ -152,7 +155,7 @@ tbody {
 /**************************/
 @media (max-width: 32em) {
   tbody tr td {
-    padding: 0.8rem 1.8rem; } }
+    padding: 0.7rem 1.5rem; } }
 
 .searchContainer {
   font-size: 3rem;
