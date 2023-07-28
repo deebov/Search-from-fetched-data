@@ -1,0 +1,50 @@
+@import "../abstracts/variables";
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: $color-white-100;
+  color: $color-grey-400;
+  font-family: Roboto;
+  padding-top: 2.3rem;
+  padding-inline: 7.8rem;
+}
+
+/**************************/
+/* BELOW 688px */
+/**************************/
+
+@media (max-width: 43em) {
+  html {
+    /* 1rem = 9px */
+    font-size: 56.25%;
+  }
+
+  body {
+    padding-inline: 4.8rem;
+  }
+}
+
+/**************************/
+/* BELOW 512px */
+/**************************/
+@media (max-width: 32em) {
+  html {
+    /* 1rem = 8px */
+    font-size: 50%;
+  }
+  body {
+    padding-inline: 2.5rem;
+  }
+}

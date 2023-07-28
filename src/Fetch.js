@@ -1,7 +1,17 @@
+//  SearchInput.js
+
+// props.loadedData.filter((item) => {
+//   (item.body.includes(userInput) ||
+//     item.title.includes(userInput) ||
+//     (item.id + "").includes(userInput)) &&
+//     arr.push(item);
+// });
+
 import React, { useState, useEffect, useCallback } from "react";
 import SearchInput from "./components/SearchInput";
 import List from "./components/List";
 import Footer from "./components/Footer";
+import SearchResult from "./components/SearchResult";
 
 function App() {
   const [datas, setDatas] = useState([]);
@@ -14,12 +24,17 @@ function App() {
   const recordsPerPage = 10;
   const lastIndex = recordsPerPage * currentPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = datas.slice(firstIndex, lastIndex);
+  const records = (filteredData > 0 ? filteredData : datas).slice(
+    firstIndex,
+    lastIndex
+  );
   const nPage = Math.ceil(datas.length / recordsPerPage);
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
   const fetchDatasHandler = useCallback(async () => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    const response = await fetch(
+      ` https://jsonplaceholder.typicode.com/posts `
+    );
     const data = await response.json();
 
     setDatas(data);
@@ -58,7 +73,7 @@ function App() {
     if (e) {
       setDatas(e);
     } else {
-      setDatas(filteredData);
+      setDatas(filteredData.length > 0 ? filteredData : datas);
     }
 
     setCurrentPage(1);
@@ -66,6 +81,7 @@ function App() {
   }
 
   function inputChangeHandler(e) {
+    setSearchInput(e.target.value);
     const userInput = e.target.value.toLowerCase();
     const keys = ["id", "body", "title"];
     let arr = [];
@@ -77,11 +93,10 @@ function App() {
       );
     });
 
-    setFilteredData(arr);
-    setSearchInput(e.target.value);
     setShowData(arr.length > 0 && userInput.length > 0 ? true : false);
+    setFilteredData(arr);
 
-    if (e.target.value.length === 0) {
+    if (e.target.value.length == 0) {
       setDatas(resetData);
     }
   }
