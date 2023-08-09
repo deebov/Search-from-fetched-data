@@ -150,6 +150,12 @@ tbody {
 .active {
   transform: rotateX(180deg); }
 
+.error {
+  color: red;
+  font-size: 2.4rem;
+  margin-top: 3rem;
+  text-align: center; }
+
 /**************************/
 /* BELOW 512px */
 /**************************/
@@ -196,14 +202,14 @@ input {
 
 .resultContainer {
   position: absolute;
-  top: 110%;
+  top: 100%;
   left: 0;
   width: 100%;
   height: 3rem;
   z-index: 2;
   box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, 0.5);
   background-color: #e6e7ea;
-  border: 1px solid #474955; }
+  border: 1px solid rgba(71, 73, 85, 0.1); }
 
 .foundData {
   height: 70vh !important;

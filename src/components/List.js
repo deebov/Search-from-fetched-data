@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import Layout from "./Layout";
 import classes from "./_List.module.scss";
 import { GoChevronDown } from "react-icons/go";
+import Feed from "./Feed";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useParams,
+  Outlet,
+} from "react-router-dom";
 
 function List(props) {
   const [toggleArr, setToggleArr] = useState({
@@ -77,11 +85,13 @@ function List(props) {
         </thead>
         <tbody>
           {loadedData.map((item, i) => (
-            <tr key={i}>
-              <td>{item.id}</td>
-              <td>{item.body}</td>
-              <td>{item.title}</td>
-            </tr>
+            <Feed
+              key={item.i}
+              id={item.id}
+              body={item.body}
+              title={item.title}
+              userId={item.userId}
+            />
           ))}
         </tbody>
       </table>

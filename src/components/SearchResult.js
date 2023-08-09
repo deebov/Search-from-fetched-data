@@ -18,7 +18,7 @@ function SearchResult(props) {
         </tr>
       </thead>
       <tbody className={classes.foundData}>
-        {data.map((item, i) => (
+        {data.map((item, i, arr) => (
           <tr
             onClick={() => {
               props.onShowFilteredData([item]);

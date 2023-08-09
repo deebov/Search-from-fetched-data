@@ -2,6 +2,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import SearchInput from "./components/SearchInput";
 import List from "./components/List";
 import Footer from "./components/Footer";
+import classes from "./components/_List.module.scss";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useParams,
+  Outlet,
+} from "react-router-dom";
+import Feed from "./components/Feed";
 
 function App() {
   const [datas, setDatas] = useState([]);
@@ -9,6 +18,8 @@ function App() {
   const [filteredData, setFilteredData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [showData, setShowData] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -19,11 +30,20 @@ function App() {
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
   const fetchDatasHandler = useCallback(async () => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-    const data = await response.json();
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts`
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
 
-    setDatas(data);
-    setResetData(data);
+      const data = await response.json();
+      setDatas(data);
+      setResetData(data);
+    } catch (err) {
+      console.log(setError(err.message));
+    }
   }, []);
 
   useEffect(() => {
@@ -33,11 +53,13 @@ function App() {
   const prevPage = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
+      navigate(`/${currentPage - 1}`);
     }
   };
   const nextPage = () => {
     if (currentPage !== nPage) {
       setCurrentPage(currentPage + 1);
+      navigate(`/${currentPage + 1}`);
     }
 
     if (nPage > 10) {
@@ -46,13 +68,8 @@ function App() {
   };
   const changeCurPage = (id) => {
     setCurrentPage(id);
+    navigate(`/${id}`);
   };
-
-  function reset() {
-    if (searchInput.length === 0) {
-      console.log("hi");
-    }
-  }
 
   function showFilteredDataHandler(e) {
     if (e) {
@@ -83,30 +100,42 @@ function App() {
 
     if (e.target.value.length === 0) {
       setDatas(resetData);
+      // navigate("/*");
     }
   }
 
+  const content = error ? (
+    <p className={classes.error}>{error}</p>
+  ) : (
+    <Routes>
+      <Route path={"/"} element={<List loadedDatas={records} />}>
+        <Route path={`/:${currentPage}`} />
+      </Route>
+    </Routes>
+  );
+
   return (
-    <React.Fragment>
+    <>
       <SearchInput
         value={searchInput}
         showData={showData}
         filteredData={filteredData}
-        onReset={reset}
         onInputChange={inputChangeHandler}
         onShowFilteredData={showFilteredDataHandler}
       />
+      {content}
 
-      <List loadedDatas={records} />
-
-      <Footer
-        numbers={numbers}
-        currentPage={currentPage}
-        onChangeCurPage={changeCurPage}
-        onPrevPage={prevPage}
-        onNextPage={nextPage}
-      />
-    </React.Fragment>
+      {!error && (
+        <Footer
+          numbers={numbers}
+          currentPage={currentPage}
+          nPage={nPage}
+          onChangeCurPage={changeCurPage}
+          onPrevPage={prevPage}
+          onNextPage={nextPage}
+        />
+      )}
+    </>
   );
 }
 
